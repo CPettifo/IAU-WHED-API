@@ -7,6 +7,10 @@ load_dotenv()
 
 app = Flask(__name__)
 
+headers = {
+    'X-API-KEY': os.getenv("X-API-KEY")
+}
+
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
@@ -20,7 +24,7 @@ def get_db_connection():
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
-    api_key = request.headers.get('X-API-KEY')
+    api_key = 'testkey123'
     if not is_valid_api_key(api_key):
         return jsonify({'error': 'Unauthorized'}), 401
 

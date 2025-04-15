@@ -16,11 +16,13 @@ def get_db_connection():
         port=int(os.getenv("DB_PORT", 3306))
     )
 
+
+
 @app.route('/api/data', methods=['GET'])
 def get_data():
     api_key = request.headers.get('X-API-KEY')
-    #if not is_valid_api_key(api_key):
-    #    return jsonify({'error': 'Unauthorized'}), 401
+    if not is_valid_api_key(api_key):
+        return jsonify({'error': 'Unauthorized'}), 401
 
     # param = request.args.get('param')
     conn = get_db_connection()
@@ -33,7 +35,13 @@ def get_data():
 
 def is_valid_api_key(key):
     
-    return key == "testkey123"
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM api_keys WHERE key_value = %s AND active = TRUE", (key,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result is not None
 
 if __name__ == "__main__":
     app.run(debug=True)

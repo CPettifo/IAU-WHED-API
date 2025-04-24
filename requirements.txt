@@ -3,3 +3,4 @@ mysql-connector-python==9.2.0
 python-dotenv==1.1.0
 requests==2.32.3
 Flask-Limiter==3.12
+gunicorn

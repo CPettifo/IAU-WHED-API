@@ -49,4 +49,4 @@ def is_valid_api_key(key):
     #return result is not None
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    return "Success", 200

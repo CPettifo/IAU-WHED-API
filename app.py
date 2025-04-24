@@ -25,14 +25,14 @@ def get_db_connection():
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
-    api_key = 'testkey123'
+    api_key = os.getenv("API_KEY")
     if not is_valid_api_key(api_key):
         return jsonify({'error': 'Unauthorized'}), 401
 
     # param = request.args.get('param')
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT OrgID, OrgName FROM whed_org;")
+    cursor.execute("SELECT OrgID, OrgName FROM whed_org LIMIT 20;")
     results = cursor.fetchall()
     cursor.close()
     conn.close()

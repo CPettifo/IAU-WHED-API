@@ -8,6 +8,7 @@ import tempfile
 app = Flask(__name__)
 
     def get_db_connection():
+        # fix indent
         certificate = os.environ.get("DB_CERT")
         if not certificate:
             raise ValueError("DB_CERT not set")

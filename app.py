@@ -1,9 +1,6 @@
 from flask import Flask, jsonify, request
 import mysql.connector
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = Flask(__name__)
 
@@ -48,5 +45,6 @@ def is_valid_api_key(key):
     #conn.close()
     #return result is not None
 
-if __name__ == "__main__":
-    print ("App started")
+    import os
+    port = int(os.environ.get("PORT", 8000))  
+    app.run(host="0.0.0.0", port=port)

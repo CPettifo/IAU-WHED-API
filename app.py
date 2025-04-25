@@ -12,11 +12,20 @@ headers = {
 }
 
 def get_db_connection():
+    certificate = os.environ.get("DB_CERT")
+    if not certificate:
+        raise ValueErorr("DB_CERT not set")
+    
+    ssl_file = "sa_cert.perm"
+    with open(ssl_file, 'w') as ssl:
+        ssl.write(certificate)
+
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
+        ssl_ca=ssl_file
         # set default port to 3306 for API connections
         port=int(os.getenv("DB_PORT", 3306))
     )

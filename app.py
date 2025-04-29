@@ -28,11 +28,9 @@ def get_db_connection():
     )
     return conn
 
-def is_valid_api_key(key):
-    # Placeholder validation
-    return True
 
-@app.route('/api/data', methods=['GET'])
+
+@app.route('/api/test', methods=['GET'])
 def get_data():
     api_key = request.headers.get("X-API-KEY")
     if not is_valid_api_key(api_key):
@@ -40,9 +38,26 @@ def get_data():
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT OrgID, OrgName FROM whed_org LIMIT 20;")
+    cursor.execute("SELECT GlobalID, OrgName, InstNameEnglish, iCreated, City, CountryCode, WWW, EMail  FROM whed_org WHERE InstClassCode = 'UV' LIMIT 80 ;")
     results = cursor.fetchall()
     cursor.close()
     conn.close()
     return jsonify(results)
 
+@app.route('/api/unrestricted', methods=['GET'])
+def get_data():
+    api_key = request.headers.get("X-API-KEY")
+    if not is_valid_api_key(api_key):
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT GlobalID, OrgName, InstNameEnglish, iCreated, City, CountryCode, WWW, EMail  FROM whed_org WHERE InstClassCode = 'UV';")
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(results)
+
+def is_valid_api_key(key):
+    # Placeholder validation
+    return True

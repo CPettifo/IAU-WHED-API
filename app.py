@@ -31,7 +31,7 @@ def get_db_connection():
 
 
 @app.route('/api/test', methods=['GET'])
-def get_data():
+def get_test_data():
     api_key = request.headers.get("X-API-KEY")
     if not is_valid_api_key(api_key):
         return jsonify({'error': 'Unauthorized'}), 401

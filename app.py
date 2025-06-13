@@ -46,7 +46,7 @@ def get_test_data():
         WHERE InstClassCode = %s AND CountryCode = %s
         LIMIT 80;    
     """
-    cursor.execute(query, ('UV' , country_code)))
+    cursor.execute(query, ('UV' , country_code))
     results = cursor.fetchall()
     cursor.close()
     conn.close()

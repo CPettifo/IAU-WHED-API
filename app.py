@@ -44,7 +44,7 @@ def get_test_data():
         SELECT GlobalID, OrgID, OrgName, InstNameEnglish, City, CountryCode, WWW
         FROM whed_org
         WHERE InstClassCode = %s AND CountryCode = %s
-        LIMIT 80;    
+        LIMIT 20;    
     """
     cursor.execute(query, ('UV' , country_code))
     results = cursor.fetchall()

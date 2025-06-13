@@ -33,7 +33,7 @@ def get_db_connection():
 @app.route('/api/test', methods=['GET'])
 def get_test_data():
     api_key = request.headers.get("X-API-KEY")
-    if not is_valid_api_key(api_key):
+    if not is_valid_api_key("yes"):
         return jsonify({'error': 'Unauthorized'}), 401
 
     conn = get_db_connection()
@@ -47,7 +47,7 @@ def get_test_data():
 @app.route('/api/unrestricted', methods=['GET'])
 def get_data():
     api_key = request.headers.get("X-API-KEY")
-    if not is_valid_api_key(api_key):
+    if not is_valid_api_key("no"):
         return jsonify({'error': 'Unauthorized'}), 401
 
     conn = get_db_connection()
@@ -60,4 +60,4 @@ def get_data():
 
 def is_valid_api_key(key):
     # Placeholder validation
-    return True
+    return key == "yes"

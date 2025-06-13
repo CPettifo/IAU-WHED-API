@@ -38,7 +38,7 @@ def get_test_data():
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT GlobalID, OrgID, OrgName, InstNameEnglish, City, CountryCode, WWW FROM whed_org WHERE InstClassCode = 'UV' LIMIT 80 ;")
+    cursor.execute("SELECT GlobalID, OrgID, OrgName, InstNameEnglish, City, CountryCode, WWW FROM whed_org WHERE InstClassCode = 'UV' AND CountryCode = 'AU' LIMIT 80;")
     results = cursor.fetchall()
     cursor.close()
     conn.close()

@@ -36,9 +36,17 @@ def get_test_data():
     if not is_valid_api_key("yes"):
         return jsonify({'error': 'Unauthorized'}), 401
 
+    country_code = request.arg.get('CountryCode', 'AU')
+
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT GlobalID, OrgID, OrgName, InstNameEnglish, City, CountryCode, WWW FROM whed_org WHERE InstClassCode = 'UV' AND CountryCode = 'AU' LIMIT 80;")
+    query = """
+        SELECT GlobalID, OrgID, OrgName, InstNameEnglish, City, CountryCode, WWW
+        FROM whed_org
+        WHERE InstClassCode = %s AND CountryCode = %s
+        LIMIT 80;    
+    """
+    cursor.execute(query, ('UV' , country_code)))
     results = cursor.fetchall()
     cursor.close()
     conn.close()

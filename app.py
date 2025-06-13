@@ -36,7 +36,7 @@ def get_test_data():
     if not is_valid_api_key("yes"):
         return jsonify({'error': 'Unauthorized'}), 401
 
-    country_code = request.arg.get('CountryCode', 'AU')
+    country_code = request.args.get('CountryCode', 'AU')
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)

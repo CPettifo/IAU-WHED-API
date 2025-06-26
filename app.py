@@ -8,12 +8,11 @@ import tempfile
 app = Flask(__name__)
 
 def get_db_connection():
-    # fix indent
     certificate = os.environ.get("DB_CERT")
     if not certificate:
         raise ValueError("DB_CERT not set")
     
-    # Use tempfile for safer handling
+    # Use tempfile for safer handling, write ssl file from environment variable
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pem") as ssl_file:
         ssl_file.write(certificate.encode('utf-8'))
         ssl_file_path = ssl_file.name
